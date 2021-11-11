@@ -8,17 +8,14 @@ import * as errors from './errors.js'
 
 import { getFeatureList } from './getFeatureList.js'
 import { getParts } from './getParts.js'
-import {getPartStudios} from './getPartStudios'
-import { getFaces } from './getFaces.js'
-import { getPartStudios } from './getPartStudios.js'
+import {getPartStudios} from './getPartStudios.js'
 import {sketchInformation} from './sketchInformation.js'
-import {getBoundingbox} from './getBoundingBox'
-import {getBoundingBoxStudio} from './getBoundingBoxStudio'
-import {getFaces} from './getFaces'
+import {getBoundingBox} from './getBoundingBox.js'
+import {getBoundingBoxStudio} from './getBoundingBoxStudio.js'
+import {getFaces} from './getFaces.js'
 import { getMass } from './getMass.js'
-import {getMassStudio} from './getMassStudio'
-import {getSTL} from './getSTL'
-import { getBoundingBox } from './getBoundingBox'
+import {getMassStudio} from './getMassStudio.js'
+import {getSTL} from './getSTL.js'
 export class OnshapeClient {
   constructor({accessKey, baseUrl, secretKey}) {
     if (typeof baseUrl !== 'string' ||
@@ -42,16 +39,13 @@ export class OnshapeClient {
       method:'post',
       data,
       headers: this.buildHeaders({
-        extraHeaders,
         method:'post',
         nonce: this.createNonce(),
         date: new Date(),
         path,
-        query,
       }),
 
       // we need the query string to match the Authorization header exactly
-      params: query,
       paramsSerializer: this.buildQueryString,
     })
     
@@ -186,11 +180,9 @@ OnshapeClient.prototype.getFeatureList = getFeatureList;
 OnshapeClient.prototype.getParts = getParts;
 OnshapeClient.prototype.getPartStudios = getPartStudios;
 OnshapeClient.prototype.getFaces = getFaces;
-OnshapeClient.prototype.getPartStudios = getPartStudios;
 OnshapeClient.prototype.sketchInformation = sketchInformation;
 OnshapeClient.prototype.getBoundingBoxStudio = getBoundingBoxStudio;
 OnshapeClient.prototype.getBoundingBoxStudio = getBoundingBoxStudio;
-OnshapeClient.prototype.getFaces = getFaces;
 OnshapeClient.prototype.getMass = getMass;
 OnshapeClient.prototype.getMassStudio = getMassStudio;
 OnshapeClient.prototype.getSTL = getSTL;
