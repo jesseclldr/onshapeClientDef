@@ -182,7 +182,6 @@ OnshapeClient.prototype.getPartStudios = getPartStudios;
 OnshapeClient.prototype.getFaces = getFaces;
 OnshapeClient.prototype.sketchInformation = sketchInformation;
 OnshapeClient.prototype.getBoundingBoxStudio = getBoundingBoxStudio;
-OnshapeClient.prototype.getBoundingBoxStudio = getBoundingBoxStudio;
 OnshapeClient.prototype.getMass = getMass;
 OnshapeClient.prototype.getMassStudio = getMassStudio;
 OnshapeClient.prototype.getSTL = getSTL;
