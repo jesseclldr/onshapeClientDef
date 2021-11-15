@@ -1,6 +1,6 @@
 // This is a method of OnshapeClient, see OnshapeClient.js
 
-export function sketchInformation({
+function sketchInformation({
   documentId,
   workspaceId,
   versionId,
@@ -32,3 +32,5 @@ export function sketchInformation({
     workspaceId,
   }).then(response => response.data)
 }
+
+module.exports = sketchInformation

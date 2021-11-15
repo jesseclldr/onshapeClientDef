@@ -1,6 +1,6 @@
 // This is a method of OnshapeClient, see OnshapeClient.js
 
-export function getParts({
+function getParts({
   documentId,
   workspaceId,
   includeFlatParts,
@@ -21,3 +21,5 @@ export function getParts({
     workspaceId,
   }).then(response => response.data)
 }
+
+module.exports = getParts

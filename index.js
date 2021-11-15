@@ -1,1 +1,3 @@
-export {OnshapeClient} from './src/client/Onshape'
+const OnshapeClient = require('./src/client/Onshape.js')
+
+module.exports = OnshapeClient

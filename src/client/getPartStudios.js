@@ -2,7 +2,7 @@
 
 // This is a method of OnshapeClient, see OnshapeClient.js
 
-export function getPartStudios({
+function getPartStudios({
     documentId,
     workspaceId,
     elementId,
@@ -18,3 +18,5 @@ export function getPartStudios({
         workspaceId,
     }).then(response => response.data)
 }
+
+module.exports = getPartStudios

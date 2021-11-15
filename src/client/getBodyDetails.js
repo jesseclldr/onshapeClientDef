@@ -1,4 +1,4 @@
-export function getBodyDetails({
+function getBodyDetails({
     documentId,
     workspaceId,
     elementId,
@@ -14,3 +14,5 @@ export function getBodyDetails({
         workspaceId,
     }).then(response => response.data)
 }
+
+module.exports = getBodyDetails

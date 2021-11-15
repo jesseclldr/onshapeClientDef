@@ -1,4 +1,4 @@
-export function getMass({
+function getMass({
     documentId,
     workspaceId,
     elementId,
@@ -14,3 +14,4 @@ export function getMass({
         workspaceId,
     }).then(response => response.data)
 }
+module.exports = getMass;

@@ -1,4 +1,4 @@
-export function getBoundingBox({
+function getBoundingBox({
     documentId,
     workspaceId,
     elementId,
@@ -14,3 +14,5 @@ export function getBoundingBox({
         workspaceId,
     }).then(response => response.data)
 }
+
+module.exports = getBoundingBox

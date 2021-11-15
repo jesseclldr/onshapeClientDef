@@ -2,7 +2,6 @@
   "_from": "@jstickets12/functionality",
   "_id": "@jstickets12/functionality@1.0.2",
   "_inBundle": false,
-  "type": "module",
   "_integrity": "sha512-74TJ6GOeDlcKtxNt8MEUWrF6u859EnDIL//det2yJhqIdkIQchEYKy88zQygjri7tWfHS15b5qRGPMKFK240cg==",
   "_location": "/@jstickets12/functionality",
   "_phantomChildren": {},
@@ -56,5 +55,5 @@
     "pub": "git add . && git commit -m \"Updated\" && npm version && npm publish",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.0.4"
+  "version": "1.0.9"
 }

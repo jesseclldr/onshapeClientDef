@@ -1,6 +1,6 @@
 // This is a method of OnshapeClient, see OnshapeClient.js
 
-export function getFeatureList({
+function getFeatureList({
   documentId,
   elementId,
   workspaceId,
@@ -26,3 +26,4 @@ export function getFeatureList({
     workspaceId,
   }).then(response => response.data)
 }
+module.exports = getFeatureList;

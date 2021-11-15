@@ -1,27 +1,25 @@
-import {URL} from 'url'
+const URL =  require('url')
 
-import axios from 'axios'
-import crypto from 'crypto'
-import querystring from 'querystring'
+const axios = require('axios')
+const crypto = require('crypto')
+const querystring = require('querystring')
 
-import * as errors from './errors.js'
-
-import { getFeatureList } from './getFeatureList.js'
-import { getParts } from './getParts.js'
-import {getPartStudios} from './getPartStudios.js'
-import {sketchInformation} from './sketchInformation.js'
-import {getBoundingBox} from './getBoundingBox.js'
-import {getBoundingBoxStudio} from './getBoundingBoxStudio.js'
-import {getFaces} from './getFaces.js'
-import { getMass } from './getMass.js'
-import {getMassStudio} from './getMassStudio.js'
-import {getSTL} from './getSTL.js'
-export class OnshapeClient {
+const  getFeatureList  = require('./getFeatureList.js')
+const  getParts =  require('./getParts.js')
+const getPartStudios =  require('./getPartStudios.js')
+const sketchInformation =  require('./sketchInformation.js')
+const getBoundingBox = require('./getBoundingBox.js')
+const getBoundingBoxStudio =  require('./getBoundingBoxStudio.js')
+const getFaces = require('./getFaces.js')
+const getMass = require('./getMass.js')
+const getMassStudio = require('./getMassStudio.js')
+const getSTL = require('./getSTL.js')
+class OnshapeClient {
   constructor({accessKey, baseUrl, secretKey}) {
     if (typeof baseUrl !== 'string' ||
       typeof accessKey !== 'string' ||
       typeof secretKey !== 'string') {
-      throw new errors.CredentialsFormatError()
+      throw new Error('Credentials are not valid')
     }
 
     // We assign axios to the prototype and use this reference because this
@@ -34,20 +32,13 @@ export class OnshapeClient {
   }
   createDocument(data){
     const path = this.baseUrl +'/api/document';
-    return this.axios.request({
-      url: this.baseUrl + path,
-      method:'post',
-      data,
-      headers: this.buildHeaders({
-        method:'post',
-        nonce: this.createNonce(),
-        date: new Date(),
-        path,
-      }),
+    return this.sendRequest({
+      method:'POST',
+      resource:'documents',
 
-      // we need the query string to match the Authorization header exactly
-      paramsSerializer: this.buildQueryString,
     })
+
+    
     
 
   }
@@ -74,7 +65,17 @@ export class OnshapeClient {
     //  - /api/[resource]/d/[documentId]/m/[microversionId][...]
     //  - /api/[resource]/d/[documentId]/m/[elementId][...]
     //  - /api/parts/d/{did}/{wvm}/{wvmid}/e/{eid}/partid/{partid}/tessellatedfaces
-    let path = [null, 'api', resource, 'd', documentId]
+    
+    let path;
+    if(resource =='documents'){
+     path = [null, 'api', resource]
+
+    }else{
+    
+     path = [null, 'api', resource, 'd', documentId]
+    }
+
+  
 
     // exactly one of these is valid
     if (workspaceId) { path.push('w', workspaceId) }
@@ -144,6 +145,7 @@ export class OnshapeClient {
     versionId,
     workspaceId,
     extraHeaders,
+    data
   }) {
     const path = this.buildDWMVEPath({
       resource,
@@ -154,7 +156,21 @@ export class OnshapeClient {
       elementId,
       subresource,
     })
+    if(method =='POST'){
+      return this.axios.post(this.baseUrl + path,{
+        headers: this.buildHeaders({
+          extraHeaders,
+          method,
+          nonce: this.createNonce(),
+          date: new Date(),
+          path,
+          query,
+        }),
+        params: query,
+        paramsSerializer: this.buildQueryString,
 
+    },data)
+  }else{
     return this.axios.request({
       url: this.baseUrl + path,
       headers: this.buildHeaders({
@@ -170,6 +186,10 @@ export class OnshapeClient {
       params: query,
       paramsSerializer: this.buildQueryString,
     })
+
+  }
+
+    
   }
 }
 
@@ -187,5 +207,5 @@ OnshapeClient.prototype.getMassStudio = getMassStudio;
 OnshapeClient.prototype.getSTL = getSTL;
 
 
-
+module.exports = OnshapeClient
 

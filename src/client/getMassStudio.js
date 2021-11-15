@@ -1,4 +1,4 @@
-export function getMassStudio({
+function getMassStudio({
     documentId,
     workspaceId,
     elementId,
@@ -14,3 +14,5 @@ export function getMassStudio({
         workspaceId,
     }).then(response => response.data)
 }
+
+module.exports = getMassStudio;

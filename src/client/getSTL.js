@@ -1,4 +1,4 @@
-export function getSTL({
+function getSTL({
     documentId,
     workspaceId,
     elementId,
@@ -14,3 +14,5 @@ export function getSTL({
         workspaceId,
     }).then(response => response.data)
 }
+
+module.exports = getSTL

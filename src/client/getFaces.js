@@ -1,4 +1,4 @@
-export function getFaces({
+function getFaces({
     documentId,
     workspaceId,
     elementId,
@@ -14,4 +14,4 @@ export function getFaces({
         workspaceId,
     }).then(response => response.data)
 }
-
+module.exports = getFaces
