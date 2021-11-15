@@ -22,4 +22,4 @@ function getParts({
   }).then(response => response.data)
 }
 
-module.exports = getParts
+module.exports = getParts;

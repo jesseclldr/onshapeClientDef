@@ -33,8 +33,10 @@ class OnshapeClient {
   createDocument(data){
     const path = this.baseUrl +'/api/document';
     return this.sendRequest({
-      method:'POST',
+      method:'post',
       resource:'documents',
+      query: {
+      },
 
     })
 
@@ -156,20 +158,44 @@ class OnshapeClient {
       elementId,
       subresource,
     })
-    if(method =='POST'){
-      return this.axios.post(this.baseUrl + path,{
+    if(method =='post'){
+      return this.axios({
+        url: this.baseUrl + path,
+        method:'post',
+        data:{
+          
+  "betaCapabilityIds": [
+    "string"
+  ],
+  "description": "string",
+  "generateUnknownMessages": true,
+  "isEmptyContent": true,
+  "isPublic": true,
+  "name": "string",
+  "notRevisionManaged": true,
+  "ownerEmail": "jesedragstra@hotmail.com",
+  "ownerId": "string",
+  "ownerType": 0,
+  "parentId": "string",
+  "projectId": "string",
+  "tags": [
+    "string"
+  ]
+        },
         headers: this.buildHeaders({
           extraHeaders,
-          method,
+          method:'post',
+          data,
           nonce: this.createNonce(),
           date: new Date(),
           path,
           query,
         }),
+  
+        // we need the query string to match the Authorization header exactly
         params: query,
         paramsSerializer: this.buildQueryString,
-
-    },data)
+      })
   }else{
     return this.axios.request({
       url: this.baseUrl + path,
