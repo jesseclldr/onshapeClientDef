@@ -3,7 +3,7 @@ const URL =  require('url')
 const axios = require('axios')
 const crypto = require('crypto')
 const querystring = require('querystring')
-
+const createDocument = require('./createDocument')
 const  getFeatureList  = require('./getFeatureList.js')
 const  getParts =  require('./getParts.js')
 const getPartStudios =  require('./getPartStudios.js')
@@ -14,6 +14,7 @@ const getFaces = require('./getFaces.js')
 const getMass = require('./getMass.js')
 const getMassStudio = require('./getMassStudio.js')
 const getSTL = require('./getSTL.js')
+const postBlobElement = require('./postBlobElement.js')
 class OnshapeClient {
   constructor({accessKey, baseUrl, secretKey}) {
     if (typeof baseUrl !== 'string' ||
@@ -29,20 +30,6 @@ class OnshapeClient {
     this.accessKey = accessKey
     this.baseUrl = baseUrl
     this.secretKey = secretKey
-  }
-  createDocument(data){
-    const path = this.baseUrl +'/api/document';
-    return this.sendRequest({
-      method:'post',
-      resource:'documents',
-      query: {
-      },
-
-    })
-
-    
-    
-
   }
 
   buildDWMVEPath({
@@ -60,6 +47,7 @@ class OnshapeClient {
     // or microversionId.
     //
     // Examples of valid path patterns:
+    //  - /api/[resource]
     //  - /api/[resource]/d/[documentId]/w/[workspaceId]/e/[elementId]/[subresource]
     //  - /api/[resource]/d/[documentId]/w/[workspaceId]/e/[elementId]
     //  - /api/[resource]/d/[documentId]/w/[workspaceId]
@@ -68,18 +56,11 @@ class OnshapeClient {
     //  - /api/[resource]/d/[documentId]/m/[elementId][...]
     //  - /api/parts/d/{did}/{wvm}/{wvmid}/e/{eid}/partid/{partid}/tessellatedfaces
     
-    let path;
-    if(resource =='documents'){
-     path = [null, 'api', resource]
-
-    }else{
-    
-     path = [null, 'api', resource, 'd', documentId]
-    }
-
-  
+    let path = [null, 'api', resource];
 
     // exactly one of these is valid
+    if (documentId) { path.push('d', documentId) }
+
     if (workspaceId) { path.push('w', workspaceId) }
     else if (versionId) { path.push('v', versionId) }
     else if (microversionId) { path.push('m', microversionId) }
@@ -157,48 +138,13 @@ class OnshapeClient {
       microversionId,
       elementId,
       subresource,
+      data
     })
-    if(method =='post'){
-      return this.axios({
-        url: this.baseUrl + path,
-        method:'post',
-        data:{
-          
-  "betaCapabilityIds": [
-    "string"
-  ],
-  "description": "string",
-  "generateUnknownMessages": true,
-  "isEmptyContent": true,
-  "isPublic": true,
-  "name": "string",
-  "notRevisionManaged": true,
-  "ownerEmail": "jesedragstra@hotmail.com",
-  "ownerId": "string",
-  "ownerType": 0,
-  "parentId": "string",
-  "projectId": "string",
-  "tags": [
-    "string"
-  ]
-        },
-        headers: this.buildHeaders({
-          extraHeaders,
-          method:'post',
-          data,
-          nonce: this.createNonce(),
-          date: new Date(),
-          path,
-          query,
-        }),
-  
-        // we need the query string to match the Authorization header exactly
-        params: query,
-        paramsSerializer: this.buildQueryString,
-      })
-  }else{
+    
     return this.axios.request({
       url: this.baseUrl + path,
+      method,
+      data,
       headers: this.buildHeaders({
         extraHeaders,
         method,
@@ -217,7 +163,7 @@ class OnshapeClient {
 
     
   }
-}
+
 
 const sampleArray = arr => arr[Math.floor(Math.random()*arr.length)]
 
@@ -231,7 +177,8 @@ OnshapeClient.prototype.getBoundingBoxStudio = getBoundingBoxStudio;
 OnshapeClient.prototype.getMass = getMass;
 OnshapeClient.prototype.getMassStudio = getMassStudio;
 OnshapeClient.prototype.getSTL = getSTL;
-
+OnshapeClient.prototype.createDocument = createDocument;
+OnshapeClient.prototype.postBlobElement = postBlobElement;
 
 module.exports = OnshapeClient
 
