@@ -73,12 +73,25 @@ class OnshapeClient {
   }
 
   buildHeaders({ extraHeaders, method, nonce, date, path, query }) {
-    const headers = {
-      'Accept': 'application/vnd.onshape.v1+json',
-      'Content-Type': 'application/json',
-      ...extraHeaders,
-      'Date': date.toUTCString(),
-      'On-Nonce': nonce,
+    let headers;
+    if(path.includes('blobelements') && method === 'post'){
+      headers = {
+        'Accept': 'application/vnd.onshape.v1+json',
+        'Content-Type': 'multipart/form-data',
+        ...extraHeaders,
+        'Date': date.toUTCString(),
+        'On-Nonce': nonce,
+      }
+
+    }else{
+      headers = {
+        'Accept': 'application/vnd.onshape.v1+json',
+        'Content-Type': 'application/json',
+        ...extraHeaders,
+        'Date': date.toUTCString(),
+        'On-Nonce': nonce,
+      }
+
     }
     const hmacString = [ // This format defined by Onshape auth
       method,

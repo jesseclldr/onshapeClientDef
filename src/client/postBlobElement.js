@@ -6,14 +6,14 @@ function postBlobElement(
 
 
 ) {
-    const file = new Buffer(mediaFile,'binary').toString('base64')
+    
     const data = {
         allowFaultyParts:false,
         createComposite:true,
         createDrawingIfPossible:true,
         encodeFilename:true,
         extractAssemblyHirerarchy:true,
-        file,
+        file:mediaFile,
 
       }
     return this.sendRequest({
