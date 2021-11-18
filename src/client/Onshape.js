@@ -193,6 +193,7 @@ OnshapeClient.prototype.getMassStudio = getMassStudio;
 OnshapeClient.prototype.getSTL = getSTL;
 OnshapeClient.prototype.createDocument = createDocument;
 OnshapeClient.prototype.postBlobElement = postBlobElement;
+OnshapeClient.prototype.getBodyDetailsStudios = getBodyDetailsStudios
 
 module.exports = OnshapeClient
 
