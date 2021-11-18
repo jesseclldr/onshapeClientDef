@@ -10,7 +10,7 @@ function getBodyDetailsStudios({
         query: {
         },
         resource: 'partstudios',
-        subresource: `e/${elementId}/partid/${partId}/bodydetails`,
+        subresource: `e/${elementId}/bodydetails`,
         workspaceId,
     }).then(response => response.data)
 }
